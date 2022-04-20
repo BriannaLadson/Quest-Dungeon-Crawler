@@ -1,0 +1,41 @@
+<!--Saved by Quest 5.8.6836.13983-->
+<asl version="580">
+  <include ref="English.aslx" />
+  <include ref="Core.aslx" />
+  <game name="Dungeon Crawler">
+    <gameid>bb0be4e5-92a9-48c3-9253-2fbb593e8d8b</gameid>
+    <version>2021.11.03</version>
+    <firstpublished>2022</firstpublished>
+  </game>
+  <object name="Character_Creation">
+    <inherit name="editor_room" />
+    <isroom />
+    <alias>Character Creation</alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <enter type="script">
+      Enter_Name
+    </enter>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+    </object>
+  </object>
+  <turnscript name="TakeTurn_TS">
+    <script>
+      Update_Status
+    </script>
+  </turnscript>
+  <function name="Enter_Name">
+    msg ("Enter your name.")
+    get input {
+      player.alias = result
+      EnableTurnScript (TakeTurn_TS)
+      do (TakeTurn_TS, "script")
+    }
+  </function>
+  <function name="Update_Status">
+    status = NewStringDictionary()
+    DictionaryAdd (status, "name", "Name: " + player.alias)
+    player.statusattributes = status
+  </function>
+</asl>
